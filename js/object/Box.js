@@ -14,7 +14,7 @@ class Box {
       bumpScale: 0.002,
       metalness: 0.2
     })
-    bp.textureLoader.load("textures/brick_diffuse.jpg", function(map) {
+    global.textureLoader.load("textures/brick_diffuse.jpg", function(map) {
       map.wrapS = THREE.RepeatWrapping
       map.wrapT = THREE.RepeatWrapping
       map.anisotropy = 4
@@ -22,7 +22,7 @@ class Box {
       cubeMat.map = map
       cubeMat.needsUpdate = true
     })
-    bp.textureLoader.load("textures/brick_bump.jpg", function(map) {
+    global.textureLoader.load("textures/brick_bump.jpg", function(map) {
       map.wrapS = THREE.RepeatWrapping
       map.wrapT = THREE.RepeatWrapping
       map.anisotropy = 4
@@ -43,9 +43,11 @@ class Box {
   }
 
   update() {
-
     this.material.needsUpdate = true
+  }
 
+  get() {
+    return this.mesh
   }
 
 }

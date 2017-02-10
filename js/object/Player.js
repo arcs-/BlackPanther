@@ -10,4 +10,8 @@ class Player {
 
 	}
 
+	get() {
+		
+	}
+
 }

@@ -2,15 +2,17 @@
 if (!Detector.webgl) Detector.addGetWebGLMessage()
 
 // create name space
-window.bp = {}
+window.global = {}
 
-bp.textureLoader = new THREE.TextureLoader()
+global.clock = new THREE.Clock()
+global.textureLoader = new THREE.TextureLoader()
 
-let camera, scene, renderer, stats
+let camera
+let scene
+let renderer
+let stats
 
 let objects = []
-
-bp.clock = new THREE.Clock()
 
 init()
 render()
@@ -27,43 +29,26 @@ function init() {
 	camera.position.z = 4
 	camera.position.y = 2
 
+	// floor & environment
+	objects.push(new Floor())
+	objects.push(new Environment())
+
+ 	// bulb
+	objects.push(new Bulb(0, 2, 0))
+
+ 	// boxes
+	objects.push(new Box(1, 0.25, 2))
+	objects.push(new Box(-1, .25, -2))
+	objects.push(new Box(1, 0.25, -1))
+
+	// add all to scene
 	scene = new THREE.Scene()
+	objects.forEach(o => scene.add(o.get()))
+
 
 	/*
-	global light
+	renderer
 	*/
-	hemiLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 0.02)
-	scene.add(hemiLight)
-
-	/*
-	Bulb
-	*/
-	let bulb = new Bulb(0, 2, 0)
-	objects.push(bulb)
-
-	/*
-	the floor
-	*/
-
-	let floor = new Floor()
-	objects.push(floor)
-
-	/*
-	some boxes
-	*/
-	let box1 = new Box(1, 0.25, 2)
-	objects.push(box1)
-	let box2 = new Box(-1, .25, -2)
-	objects.push(box2)
-	let box3 = new Box(1, 0.25, -1)
-	objects.push(box3)
-
-
-
-	objects.forEach(o => scene.add(o.mesh))
-
-
-
 	renderer = new THREE.WebGLRenderer()
 	renderer.physicallyCorrectLights = true
 	renderer.gammaInput = true
@@ -100,8 +85,6 @@ function render() {
 
 	renderer.toneMappingExposure = Math.pow(.5, 5.0) // to allow for very bright scenes.
 	renderer.shadowMap.enabled = true
-
-	hemiLight.intensity = 5
 
 	renderer.render(scene, camera)
 	stats.update()

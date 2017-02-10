@@ -28,10 +28,14 @@ class Bulb {
   	this.material.emissiveIntensity = 2 / Math.pow(0.02, 2.0) // convert from intensity to irradiance at bulb surface
 
     let time = Date.now() * 0.0005
-  	let delta = bp.clock.getDelta()
+  	let delta = global.clock.getDelta()
 
   	this.light.position.y = Math.cos(time) * 0.75 + 1.25
 
+  }
+
+  get() {
+    return this.light
   }
 
 }
