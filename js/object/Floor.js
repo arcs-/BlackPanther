@@ -3,13 +3,15 @@ class Floor {
 	constructor() {
 
 		this.material = new THREE.MeshStandardMaterial({
-      color: 0xaaaaaa
-    })
+			color: 0x333333
+		})
 
-		this.geometry = new THREE.PlaneBufferGeometry(10, 10)
+		this.geometry = new THREE.PlaneBufferGeometry(30, 17)
 		this.mesh = new THREE.Mesh(this.geometry, this.material)
 		this.mesh.receiveShadow = true
 		this.mesh.rotation.x = -Math.PI / 2.0
+
+		global.scene.add(this.mesh)
 
 	}
 
@@ -17,8 +19,5 @@ class Floor {
 		this.material.needsUpdate = true
 	}
 
-	get() {
-    return this.mesh
-  }
 
 }
