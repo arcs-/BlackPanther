@@ -6,6 +6,9 @@ window.global = {}
 
 global.clock = new THREE.Clock()
 global.textureLoader = new THREE.TextureLoader()
+global.manager = new THREE.LoadingManager()
+global.manager.onProgress = function(item, loaded, total) { console.log(item, loaded, total) }
+global.objloader = new THREE.OBJLoader(global.manager)
 
 let camera
 let scene
@@ -33,10 +36,11 @@ function init() {
 	objects.push(new Floor())
 	objects.push(new Environment())
 
- 	// bulb
-	objects.push(new Bulb(0, 2, 0))
+	// bulb
+	//objects.push(new Bulb(0, 2, 0))
+	objects.push(new Streetlight(0, 0, 0))
 
- 	// boxes
+	// boxes
 	objects.push(new Box(1, 0.25, 2))
 	objects.push(new Box(-1, .25, -2))
 	objects.push(new Box(1, 0.25, -1))
