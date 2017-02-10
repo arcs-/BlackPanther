@@ -6,12 +6,12 @@ window.global = {}
 
 global.clock = new THREE.Clock()
 global.textureLoader = new THREE.TextureLoader()
-global.manager = new THREE.LoadingManager()
-global.manager.onProgress = function(item, loaded, total) { console.log(item, loaded, total) }
-global.objloader = new THREE.OBJLoader(global.manager)
+global.objLoader = new OBJLoader()
+global.keyboard = new Keyboard()
+
+global.scene = new THREE.Scene()
 
 let camera
-let scene
 let renderer
 let stats
 
@@ -36,19 +36,16 @@ function init() {
 	objects.push(new Floor())
 	objects.push(new Environment())
 
-	// bulb
-	//objects.push(new Bulb(0, 2, 0))
-	objects.push(new Streetlight(0, 0, 0))
+	// streetlights
+	for (let i = -15; i <= 10; i += 5) {
+		objects.push(new Streetlight(i, 0, -6))
+		objects.push(new Streetlight(i, 0, 6))
+	}
 
 	// boxes
 	objects.push(new Box(1, 0.25, 2))
-	objects.push(new Box(-1, .25, -2))
-	objects.push(new Box(1, 0.25, -1))
-
-	// add all to scene
-	scene = new THREE.Scene()
-	objects.forEach(o => scene.add(o.get()))
-
+	//	objects.push(new Box(-1, .25, -2))
+	//objects.push(new Box(1, 0.25, -1))
 
 	/*
 	renderer
@@ -90,7 +87,7 @@ function render() {
 	renderer.toneMappingExposure = Math.pow(.5, 5.0) // to allow for very bright scenes.
 	renderer.shadowMap.enabled = true
 
-	renderer.render(scene, camera)
+	renderer.render(global.scene, camera)
 	stats.update()
 
 }

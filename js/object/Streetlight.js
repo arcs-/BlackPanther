@@ -5,55 +5,52 @@ class Streetlight {
 		this.y = y || 0
 		this.z = z || 0
 
+		this.offset = 0
+
 		let _self = this
 
-		let material = new THREE.MeshStandardMaterial({
-			//color: 0x999999,
-			wireframe: true
-		})
-		global.objloader.load('models/streetlight.obj', function(lamp) {
+		let material = new THREE.MeshStandardMaterial({ color: 0x000000 })
+
+		global.objLoader.get('models/streetlight.obj', function(lamp) {
 			lamp.traverse(function(child) {
 				if (child instanceof THREE.Mesh) {
-					child.material = material;
+					child.material = material
 				}
 			})
 
-			lamp.scale.set(.3, .2, .3)
-
-			lamp.position.set(_self.x, _self.y, _self.z)
+			lamp.scale.set(.3, .3, .3)
+			//lamp.position.set(_self.x, _self.y, _self.z)
 			_self.lamp = lamp
-			scene.add(lamp)
 
-
-			let light = new THREE.PointLight(0xffee88, 20, 100, 2)
-
-			light.position.set(_self.x, _self.y + 6, _self.z)
+			let light = new THREE.SpotLight(0xfff9a2, 100, 4)
+			//light.position.set(_self.x, _self.y + 2.2, _self.z)
+			light.position.y = 2.2
+			light.target.position.set(_self.x, _self.y, _self.z)
 			light.castShadow = true
-			//scene.add(light)
+			light.target.updateMatrixWorld()
+			_self.light = light
 
-			var spotlight = new THREE.SpotLight(0xffffff, 10)
-			spotlight.position.set(_self.x, _self.y + 1, _self.z)
-			spotlight.lookAt(_self.x, _self.y, _self.z)
+			_self.streetlight = new THREE.Group()
+			_self.streetlight.add(lamp)
+			_self.streetlight.add(light)
 
-			spotlight.castShadow = true;
+			_self.streetlight.position.set(_self.x, _self.y, _self.z)
 
-			spotlight.shadow.mapSize.width = 1024;
-			spotlight.shadow.mapSize.height = 1024;
-
-			scene.add(spotlight)
+			global.scene.add(_self.streetlight)
 
 		})
-
 
 	}
 
 	update() {
+		if (!this.streetlight) return
 
+		this.offset += .1
+		if (this.offset > 5) this.offset = 0
+		this.streetlight.position.x = this.x + this.offset
+		this.light.target.position.x = this.streetlight.position.x
+		this.light.target.updateMatrixWorld()
 
-	}
-
-	get() {
-		//return this.lamp
 	}
 
 }

@@ -1,21 +1,15 @@
 class Environment {
 
-  constructor() {
+	constructor() {
 
-    this.hemiLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 0.02)
+		this.hemiLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 0.02)
+		global.scene.add(this.hemiLight)
 
-  }
+	}
 
-  update() {
-    this.hemiLight.intensity = 5
+	update() {
+		this.hemiLight.intensity = 5
 
-  }
-
-  get() {
-    let environment = new THREE.Group()
-    environment.add(this.hemiLight)
-
-    return environment
-  }
+	}
 
 }
