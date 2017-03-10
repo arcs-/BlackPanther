@@ -20,7 +20,7 @@ class OBJLoader {
 				this[modelpath + "loading"] = true
 				let _self = this
 
-				this.objLoader.load('models/streetlight.obj', function(model) {
+				this.objLoader.load(modelpath, function(model) {
 					_self[modelpath] = model
 					_self[modelpath + "waiting"].forEach(c => c(model.clone()))
 

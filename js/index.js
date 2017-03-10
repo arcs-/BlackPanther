@@ -43,9 +43,12 @@ function init() {
 	}
 
 	// boxes
-	objects.push(new Box(1, 0.25, 2))
+	//objects.push(new Box(1, 0.25, 2))
 	//	objects.push(new Box(-1, .25, -2))
 	//objects.push(new Box(1, 0.25, -1))
+
+	objects.push(new Car(0, 0.25, 0))
+	objects.push(new Coin(0, 0.25, 0))
 
 	/*
 	renderer
