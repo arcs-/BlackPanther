@@ -28,7 +28,7 @@ class Coin {
 		this.coin.rotation.y = global.clock.getElapsedTime() % 3.14 // cheap PI
 		this.coin.position.y = Math.cos(global.clock.getElapsedTime() * 3) * .5 - .7
 
-		this.offset += .1
+		this.offset += global.MAP_SPEED
 		if (this.offset > 15) this.offset = -45
 		this.coin.position.x = this.x + this.offset
 

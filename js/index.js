@@ -2,7 +2,10 @@
 if (!Detector.webgl) Detector.addGetWebGLMessage()
 
 // create name space
-window.global = {}
+window.global = {
+	MAP_SPEED: 0.2
+
+}
 
 global.clock = new THREE.Clock()
 global.textureLoader = new THREE.TextureLoader()
@@ -35,12 +38,14 @@ function init() {
 	//objects.push(new Floor())
 	objects.push(new Environment())
 
+	objects.push(new Car(0, 0.1, 0))
+
 	// sections
 	for (let i = -46; i <= 10; i += 8) {
 		objects.push(new Section(i, 0, 0))
 	}
 
-	objects.push(new Car(0, 0.1, 0))
+
 
 	objects.push(new Coin(3, 0, 1))
 

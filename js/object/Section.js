@@ -21,7 +21,7 @@ class Section {
 
 			_self.section = section
 
-			let light = new THREE.SpotLight(0xfff9a2, 100, 7, 2)
+			let light = new THREE.SpotLight(0xfff9a2, 150, 7, 2)
 			light.position.y = 2.9
 			light.position.z = 6
 			light.target.position.set(_self.x, _self.y, _self.z + 6)
@@ -51,16 +51,21 @@ class Section {
 	update() {
 		if (!this.sectionGroup) return
 
+		// if hero is within 10 units the section, turn on shadows
+		this.light.castShadow = this.light2.castShadow = false
+		if (10 > Math.abs(global.hero.car.position.x - this.sectionGroup.position.x)) {
+			if (global.hero.car.position.z > 0) this.light.castShadow = true
+			else this.light2.castShadow = true
+		}
 
 		this.section.traverse(function(child) {
 			if (child instanceof THREE.Mesh) {
 				child.material.needsUpdate = true
-
 			}
 		})
 		//this.streetlight.material.needsUpdate = true
 
-		this.offset += .1
+		this.offset += global.MAP_SPEED
 		if (this.offset > 8) this.offset = 0
 		this.sectionGroup.position.x = this.x + this.offset
 		this.light.target.position.x = this.sectionGroup.position.x

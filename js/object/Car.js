@@ -1,19 +1,22 @@
 class Car {
 
-	constructor(x, y, z) {
-		this.x = x || 0
-		this.y = y || 0
-		this.z = z || 0
+	constructor(x = 0, y = 0, z = 0) {
 
-		let _self = this
+		let _self = global.hero = this
 
-		global.objLoader.get('models/car.obj', function(car) {
-			car.traverse(function(child) {
+		global.objLoader.get('models/car.obj', function(carBody) {
+			carBody.traverse(function(child) {
 				if (child instanceof THREE.Mesh) child.castShadow = true
 			})
-			car.position.set(_self.x, _self.y, _self.z)
 
-			global.scene.add(_self.car = car)
+			_self.car = new THREE.Group()
+			_self.car.add(carBody)
+
+
+			_self.car.position.set(x, y, z)
+
+
+			global.scene.add(_self.car)
 
 		})
 
