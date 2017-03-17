@@ -2,7 +2,10 @@
 if (!Detector.webgl) Detector.addGetWebGLMessage()
 
 // create name space
-window.global = {}
+window.global = {
+	MAP_SPEED: 0.2
+
+}
 
 global.clock = new THREE.Clock()
 global.textureLoader = new THREE.TextureLoader()
@@ -28,24 +31,23 @@ function init() {
 	container.appendChild(stats.dom)
 
 	camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100)
-	camera.position.x = -4
-	camera.position.z = 4
-	camera.position.y = 2
+	camera.position.x = 20
+	camera.position.y = 17
 
 	// floor & environment
-	objects.push(new Floor())
+	//objects.push(new Floor())
 	objects.push(new Environment())
 
-	// streetlights
-	for (let i = -15; i <= 10; i += 5) {
-		objects.push(new Streetlight(i, 0, -6))
-		objects.push(new Streetlight(i, 0, 6))
+	objects.push(new Car(0, 0.1, 0))
+
+	// sections
+	for (let i = -46; i <= 10; i += 8) {
+		objects.push(new Section(i, 0, 0))
 	}
 
-	// boxes
-	objects.push(new Box(1, 0.25, 2))
-	//	objects.push(new Box(-1, .25, -2))
-	//objects.push(new Box(1, 0.25, -1))
+
+
+	objects.push(new Coin(3, 0, 1))
 
 	/*
 	renderer
