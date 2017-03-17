@@ -9,7 +9,7 @@ class Environment {
 
 	update() {
 
-		this.hemiLight.intensity = 10
+		this.hemiLight.intensity = 30
 
 
 	}

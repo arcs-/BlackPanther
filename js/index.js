@@ -1,9 +1,12 @@
 // warn user if his broswer doesn't support webgl
 if (!Detector.webgl) Detector.addGetWebGLMessage()
 
+const rand = (min, max) => Math.random()*(max-min)+min
+
 // create name space
 window.global = {
-	MAP_SPEED: 0.2
+	MAP_SPEED: 0,
+	TARGET_SPEED: 0.2
 
 }
 
@@ -31,8 +34,8 @@ function init() {
 	container.appendChild(stats.dom)
 
 	camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100)
-	camera.position.x = 20
-	camera.position.y = 17
+	camera.position.x = 15
+	camera.position.y = 5
 
 	// floor & environment
 	//objects.push(new Floor())
@@ -41,13 +44,15 @@ function init() {
 	objects.push(new Car(0, 0.1, 0))
 
 	// sections
-	for (let i = -46; i <= 10; i += 8) {
+	for (let i = -50; i <= 10; i += 8) {
 		objects.push(new Section(i, 0, 0))
 	}
+	// coins
+	for (let i = 8; i <= 80; i += 8) {
+		objects.push(new Coin(-rand(45,180), rand(0, 1),rand(-3.5,3.5)))
+		console.log(i);
+	}
 
-
-
-	objects.push(new Coin(3, 0, 1))
 
 	/*
 	renderer
@@ -89,7 +94,16 @@ function render() {
 	renderer.toneMappingExposure = Math.pow(.5, 5.0) // to allow for very bright scenes.
 	renderer.shadowMap.enabled = true
 
+	if(global.TARGET_SPEED > global.MAP_SPEED) global.MAP_SPEED += 0.005
+
 	renderer.render(global.scene, camera)
 	stats.update()
 
+}
+
+let score = 0
+function updateScore() {
+	score ++
+	global.TARGET_SPEED += (Math.log((score+2)/2)-Math.log((score+1)/2)) / 8
+	document.getElementById("score").innerText = score
 }

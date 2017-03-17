@@ -14,8 +14,8 @@ class Section {
 		global.objLoader.get('models/section.obj', function(section) {
 			section.traverse(function(child) {
 				if (child instanceof THREE.Mesh) {
-					child.material = material
-					child.receiveShadow = true
+				//	child.material = material
+					child.receiveShadow = false
 				}
 			})
 
