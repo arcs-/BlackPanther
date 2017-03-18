@@ -5,28 +5,33 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <style>
-          @import url('https://fonts.googleapis.com/css?family=Homenaje');
+            @import url( 'https://fonts.googleapis.com/css?family=Homenaje');
             body {
                 background-color: #000;
                 margin: 0;
                 overflow: hidden;
-                font-family: Homenaje
+                font-family: Homenaje;
+                background: url("img/back.png");
+                background-size: cover;
             }
 
             #overlay {
-              position: absolute;
-              color: #eee;
-              top: 0;
-              right: 10px;
-
+                position: absolute;
+                color: #eee;
+                top: 0;
+                right: 10px;
             }
 
         </style>
     </head>
     <body>
-      <div id="overlay">
-        <h1>Score: <span id="score">0</span></h1>
-      </div>
+        <div id="overlay">
+            <h1>
+                <small>score
+                </small>
+                <span id="score">0</span>
+            </h1>
+        </div>
         <div id="container"></div>
 
         <script src="js/lib/three.min.js"></script>
@@ -39,6 +44,7 @@
 
         <script src="js/utils/OBJLoader.js"></script>
         <script src="js/utils/Keyboard.js"></script>
+        <script src="js/utils/Audio.js"></script>
 
         <script src="js/object/Bulb.js"></script>
         <script src="js/object/Section.js"></script>

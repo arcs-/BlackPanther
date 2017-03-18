@@ -2,16 +2,14 @@ class Environment {
 
 	constructor() {
 
-		this.hemiLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 0.02)
+		this.hemiLight = new THREE.HemisphereLight(0xffffff, 0x000000, .3)
+		this.fog = new THREE.FogExp2(0x000000, 0.015)
+
 		global.scene.add(this.hemiLight)
+		global.scene.fog = this.fog
 
 	}
 
-	update() {
-
-		this.hemiLight.intensity = 30
-
-
-	}
+	update() {}
 
 }

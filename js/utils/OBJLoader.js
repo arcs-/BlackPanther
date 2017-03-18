@@ -23,7 +23,7 @@ class OBJLoader {
 				objLoader.load(modelpath, function(model) {
 
 					_self[modelpath] = model
-					if (_self[modelpath + "waiting"]) _self[modelpath + "waiting"].forEach(c => c(model.clone()))
+					if (_self[modelpath + "waiting"]) _self[modelpath + "waiting"].forEach(c => c(model.GdeepCloneMaterials()))
 
 					delete _self[modelpath + "loading"]
 					delete _self[modelpath + "waiting"]
@@ -38,7 +38,7 @@ class OBJLoader {
 				var path = modelpath.substring(0, idx)
 				var name = modelpath.substring(idx)
 
-				_self.mtlLoader.setBaseUrl(path)
+				_self.mtlLoader.setTexturePath(path)
 				_self.mtlLoader.setPath(path)
 				_self.mtlLoader.load(name.substring(0, name.length - 3) + 'mtl', function(materials) {
 
@@ -48,12 +48,15 @@ class OBJLoader {
 					load(name)
 
 				}, function(err) {
+
+					let material = new THREE.MeshPhongMaterial({ color: 0xfefefe })
+					objLoader.setMaterials(material)
 					load(modelpath)
 				})
 
 			}
 
-		} else callback(this[modelpath].clone())
+		} else callback(this[modelpath].GdeepCloneMaterials())
 
 	}
 
